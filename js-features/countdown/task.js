@@ -9,4 +9,4 @@ function countDown(timer) {
     clearInterval(intervalId);
   }
 };
-let intervalId = window.setInterval(countDown, 100, timer);
+let intervalId = window.setInterval(countDown, 1000, timer);
