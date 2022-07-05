@@ -8,17 +8,9 @@ menuLinks.forEach(item => {
         subMenu.classList.remove('menu_active');
       };
     });
-
     if (item.parentElement.querySelector('ul')) {
       e.preventDefault();
-    };
-    
+    };    
     item.parentElement.querySelector('ul').classList.toggle('menu_active');    
   });
 });
-
-/*
-if (menuLink.hasChildNodes()) menuLink.hasChildNodes() {
-  
-}
-*/
