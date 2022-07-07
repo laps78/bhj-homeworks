@@ -1,27 +1,35 @@
 const sliderArrowPrev = document.querySelector('.slider__arrow_prev');
 const sliderArrowNext = document.querySelector('.slider__arrow_next');
 const dots = document.querySelectorAll('.slider__dot');
-const sliderItems = document.querySelectorAll('.slider__item');
-let currentSlide = document.querySelector('.slider__item_active')
-//
-console.log('current slide:'); 
-console.log(currentSlide);
+const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
+let currentSlideIndex = sliderItems.indexOf(document.querySelector('.slider__item_active'));
 
-console.log('dots:');
-console.log(dots);
-//
-
-
+function deactivateSlides() {
+  sliderItems.forEach(item => {
+    if (item.classList.contains('slider__item_active')) {
+      item.classList.remove('slider__item_active');
+    };
+  });  
+}
+//prev navigation
 sliderArrowPrev.onclick = function () {
-  //console.log();
+  currentSlideIndex -= 1;
+  if (currentSlideIndex < 0) currentSlideIndex = sliderItems.length - 1;
+  deactivateSlides();
+  sliderItems[currentSlideIndex].classList.add('slider__item_active');
 };
-
+//next navigation
 sliderArrowNext.onclick = function () {
-
+  currentSlideIndex += 1;
+  if (currentSlideIndex > sliderItems.length - 1) currentSlideIndex = 0;
+  deactivateSlides();
+  sliderItems[currentSlideIndex].classList.add('slider__item_active');
 };
-
-dots.forEach(dot => {
+//dots navigation
+dots.forEach((dot, dotIndex) => {
   dot.addEventListener('click', e => {
-    sliderItems[Array.from(dots).indexOf(dot)].classList.toggle('slider__item_active');
+    deactivateSlides();
+    sliderItems[dotIndex].classList.add('slider__item_active');
+    currentSlideIndex = dotIndex;
   });
 });
