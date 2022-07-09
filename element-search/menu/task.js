@@ -4,7 +4,6 @@ const subMenus = document.querySelectorAll('.menu_sub');
 menuLinks.forEach(item => {
   item.addEventListener('click', e => {
     let thisSubMenu = e.target.parentElement.querySelector('.menu_sub');
-    console.log('Click!');
     if (thisSubMenu.classList.contains('menu_active')) {
       thisSubMenu.classList.remove('menu_active');
     } else {
