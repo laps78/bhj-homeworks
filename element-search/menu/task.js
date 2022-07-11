@@ -5,17 +5,20 @@ menuLinks.forEach(item => {
   item.addEventListener('click', e => {
     if (item.parentElement.querySelector('.menu_sub')) {
       e.preventDefault();
-    };
-    let thisSubMenu = e.target.parentElement.querySelector('.menu_sub');
-    if (thisSubMenu.classList.contains('menu_active')) {
-      thisSubMenu.classList.remove('menu_active');
-    } else {
-      subMenus.forEach(subMenu => {
+      //closing active submenu by click
+      let thisSubMenu = e.target.parentElement.querySelector('.menu_sub');
+      if (thisSubMenu.classList.contains('menu_active')) {
+        thisSubMenu.classList.remove('menu_active');
+      } else {
+        //closing all submenus
+        subMenus.forEach(subMenu => {
         if (subMenu.classList.contains('menu_active')) {
           subMenu.classList.remove('menu_active');
-        };
-      });
-      item.parentElement.querySelector('ul').classList.toggle('menu_active');
+          };
+        });
+
+        item.parentElement.querySelector('ul').classList.toggle('menu_active');
+      };
     };
   });
 });
