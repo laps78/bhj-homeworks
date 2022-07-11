@@ -10,7 +10,7 @@ menuLinks.forEach(item => {
       if (thisSubMenu.classList.contains('menu_active')) {
         thisSubMenu.classList.remove('menu_active');
       } else {
-        //closing all submenus
+        //closing all submenus if opened
         subMenus.forEach(subMenu => {
         if (subMenu.classList.contains('menu_active')) {
           subMenu.classList.remove('menu_active');
