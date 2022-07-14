@@ -4,9 +4,10 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
-
+    this.time = container.querySelector('.status__time');
+    this.clickCount = 0;
+    
     this.reset();
-
     this.registerEvents();
   }
 
@@ -16,6 +17,21 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
+  //timer
+  timer() {
+    this.clickCount = 1;
+    if (!this.timeout) {
+      this.timeout = setInterval(() => {
+        this.time.textContent -= 1;
+        if (this.time.textContent === "0") {
+          this.fail();
+        };
+      }, 1000);
+    }
+  }
+
+  setTimer = this.timer.bind(this);
+
   registerEvents() {
     /*
       TODO:
@@ -24,13 +40,12 @@ class Game {
       В случае правильного ввода слова вызываем this.success()
       При неправильном вводе символа - this.fail();
      */
-    console.log(this);
-   
     document.addEventListener('keyup', (e) => {
+      document.removeEventListener('keydown', this.setTimer);
+      this.clickCount += 1;
       if (e.key.toLowerCase() === this.currentSymbol.textContent.toLowerCase()) {
         this.success();
       } else {
-        ++this.lossElement.textContent;
         this.fail();
         };
     });
@@ -60,8 +75,16 @@ class Game {
 
   setNewWord() {
     const word = this.getWord();
-
     this.renderWord(word);
+    this.time.textContent = this.wordElement.textContent.length;
+    
+    clearInterval(this.timeout);
+    this.timeout = null;
+    this.clickCount = 0;
+    if (this.clickCount === 0) {
+      document.addEventListener('keydown', this.setTimer);
+    }
+    
   }
 
   getWord() {
