@@ -15,7 +15,6 @@ function clearBookClasslist() {
 
 bookCtrl.addEventListener('click', e => {
   e.preventDefault();
-  console.log(e.target);
   //changing active size control link
   bookCtrlLinks[activeCtrlLinkIndex].classList.remove('font-size_active');
   e.target.classList.add('font-size_active');
