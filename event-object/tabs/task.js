@@ -1,4 +1,4 @@
-const tabNavigations = document.querySelectorAll('.tabs');
+const tabNavigations = document.querySelectorAll('.tab__navigation');
 
 class TabSelector {
   constructor(container) {
@@ -23,7 +23,7 @@ class TabSelector {
   }
 
   eventHandler() {
-    this.container.addEventListener('click', (e) => {
+    this.container.querySelector('.tab__navigation').addEventListener('click', (e) => {
       this.deactivate(this.currentIndex);
       this.currentIndex = Array.from(this.tabLinks).indexOf(e.target);
       this.activate(this.currentIndex);
