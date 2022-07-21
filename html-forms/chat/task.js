@@ -9,7 +9,8 @@ const botMessages = [
   'К сожалению, все операторы сейчас заняты. Не пишите нам больше!',
   'Добрый день! До свидания!',
   'Вы не купили ни одного товара доя того, чтобы так с нами разговаривать!',
-  'Мы ничего не будем вам продавать!'
+  'Мы ничего не будем вам продавать!',
+  'Я тупой бот, друг, не обессудь! Сам в шоке... Эти кодеры чем думают, я не знаю?!'
 ]
 
 let timestamp, hours, minutes;
@@ -29,16 +30,14 @@ class Chatbox {
     this.input = chatWidget.querySelector('#chat-widget__input');
     this.input.value = '';
     this.messages = chatWidget.querySelector('chat-widget__messages');
-
-    this.timeout = setInterval(this.chatBotMessage, 5000);
-
+    //this.timeout = setInterval(this.chatBotMessage, 5000);
     this.input.focus();
     this.inputEventHandler();
   }
 
   inputEventHandler() {
     this.input.addEventListener('keyup', e => {
-      if (this.input.value !== ''){
+      if (this.input.focus && this.input.value !== ''){
         if (e.key === 'Enter') {
           this.userMessage(this.input.value);
           this.input.value = '';
@@ -55,13 +54,14 @@ class Chatbox {
     if (hours < 10) hours = '0' + hours;
     minutes = timestamp.getMinutes()
     if (minutes < 10) minutes = '0' + minutes;
-
     return `${hours}:${minutes} `;
-
-
   }
 
   autoScroll() {
+    if (this.timeout) {
+      clearInterval(this.timeout);
+    };
+    this.timeout = setInterval(this.chatBotMessage, 5000);
     messages.lastChild.scrollIntoView();
   }
 
@@ -71,8 +71,10 @@ class Chatbox {
       <div class="message__time">${this.timeStamp}</div>
       <div class="message__text">${botMessages[Math.floor(Math.random() * (botMessages.length - 1))]}</div>
     </div>`;
+    debugger;
     this.autoScroll();
-    clearInterval(this.timeout);
+    debugger;
+    
   }
 
   userMessage(message) {
@@ -83,7 +85,6 @@ class Chatbox {
         <div class="message__text">${message}</div>
       </div>`;
     this.autoScroll();
-    clearInterval(this.timeout);
     this.chatBotMessage();
   }
 }
