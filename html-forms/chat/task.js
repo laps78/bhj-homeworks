@@ -59,7 +59,7 @@ class Chatbox {
   }
 
   autoScroll() {
-    messages.scrollTop = messages.scrollHeight
+    messages.lastChild.scrollIntoView();
   }
 
   chatBotMessage() {
