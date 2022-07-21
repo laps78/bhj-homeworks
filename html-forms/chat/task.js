@@ -12,7 +12,7 @@ const botMessages = [
   'Мы ничего не будем вам продавать!'
 ]
 
-let hours, minutes;
+let timestamp, hours, minutes;
 
 function activateChat() {
   chatWidget.classList.add(activeWidgetClass);
@@ -50,12 +50,15 @@ class Chatbox {
   }
 
   get timeStamp() {
-    hours = new Date().getHours();
+    timestamp = new Date();
+    hours = timestamp.getHours();
     if (hours < 10) hours = '0' + hours;
-    minutes = new Date().getMinutes()
+    minutes = timestamp.getMinutes()
     if (minutes < 10) minutes = '0' + minutes;
 
     return `${hours}:${minutes} `;
+
+
   }
 
   autoScroll() {
