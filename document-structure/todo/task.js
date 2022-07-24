@@ -17,7 +17,6 @@ function createTask(taskText) {
   taskNode.outerHTML = `<div class="task"><div class="task__title">${taskText}</div><a href="#" class="task__remove">&times;</a></div>`;
 }
 
-
 function removeTask(taskElement) {
   //remove task from local storage
   const taskText = taskElement.firstChild.textContent;
@@ -27,7 +26,6 @@ function removeTask(taskElement) {
   //remove task
   taskElement.remove();
 }
-
 
 if (localStorage.getItem('savedTaskArray')) {
   fillSavedTasks();
