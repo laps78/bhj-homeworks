@@ -22,7 +22,6 @@ function activateChat() {
 
 function deactivateChat() {
   chatWidget.classList.remove(activeWidgetClass);
-  document.addEventListener('click', clickEventHandler);
 }
 
 class Chatbox {
@@ -86,6 +85,7 @@ class Chatbox {
 }
 
 function clickEventHandler(e) {
+  console.log(e.target);
   if (e.target.closest('.chat-widget') === chatWidget) {
     activateChat();
   } else {
