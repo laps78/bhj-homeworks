@@ -22,6 +22,7 @@ function activateChat() {
 
 function deactivateChat() {
   chatWidget.classList.remove(activeWidgetClass);
+  document.addEventListener('click', clickEventHandler);
 }
 
 class Chatbox {
@@ -30,7 +31,8 @@ class Chatbox {
     this.input = chatWidget.querySelector('#chat-widget__input');
     this.input.value = '';
     this.messages = chatWidget.querySelector('chat-widget__messages');
-    //this.timeout = setInterval(this.chatBotMessage, 5000);
+    this.timeout = setInterval(this.chatBotMessage.bind(this), 30000);
+    
     this.input.focus();
     this.inputEventHandler();
   }
@@ -42,9 +44,7 @@ class Chatbox {
           this.userMessage(this.input.value);
           this.input.value = '';
         }
-      } else {
-        console.log('Пустая строка!');
-      }
+      } 
     })
   }
 
@@ -61,7 +61,7 @@ class Chatbox {
     if (this.timeout) {
       clearInterval(this.timeout);
     };
-    this.timeout = setInterval(this.chatBotMessage, 5000);
+    this.timeout = setInterval(this.chatBotMessage.bind(this), 30000);
     messages.lastChild.scrollIntoView();
   }
 
@@ -71,14 +71,10 @@ class Chatbox {
       <div class="message__time">${this.timeStamp}</div>
       <div class="message__text">${botMessages[Math.floor(Math.random() * (botMessages.length - 1))]}</div>
     </div>`;
-    debugger;
-    this.autoScroll();
-    debugger;
-    
+    this.autoScroll(); 
   }
 
   userMessage(message) {
-    console.log(`user says`);
     messages.innerHTML += `
       <div div class="message message_client">
         <div class="message__time">${this.timeStamp}</div>
@@ -89,10 +85,12 @@ class Chatbox {
   }
 }
 
-document.addEventListener('click', e => {
+function clickEventHandler(e) {
   if (e.target.closest('.chat-widget') === chatWidget) {
     activateChat();
   } else {
     deactivateChat();
   }
-});
+}
+
+document.addEventListener('click', clickEventHandler);
