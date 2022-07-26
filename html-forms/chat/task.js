@@ -18,12 +18,18 @@ let timestamp, hours, minutes;
 function activateChat() {
   chatWidget.classList.add(activeWidgetClass);
   new Chatbox(chatWidget);
+  document.removeEventListener('click', clickEventHandler);
+  document.addEventListener('click', e => {
+    if ((e.target.closest('.chat-widget') !== chatWidget)) {
+      deactivateChat();
+      document.addEventListener('click', clickEventHandler);
+    }
+  })
 }
 
 function deactivateChat() {
   chatWidget.classList.remove(activeWidgetClass);
 }
-
 class Chatbox {
   constructor(chatWidget) {
     this.messages = chatWidget.querySelector('.chat-widget__messages');
@@ -31,7 +37,6 @@ class Chatbox {
     this.input.value = '';
     this.messages = chatWidget.querySelector('chat-widget__messages');
     this.timeout = setInterval(this.chatBotMessage.bind(this), 30000);
-    
     this.input.focus();
     this.inputEventHandler();
   }
@@ -85,12 +90,9 @@ class Chatbox {
 }
 
 function clickEventHandler(e) {
-  console.log(e.target);
   if (e.target.closest('.chat-widget') === chatWidget) {
     activateChat();
-  } else {
-    deactivateChat();
-  }
+  } 
 }
 
 document.addEventListener('click', clickEventHandler);
