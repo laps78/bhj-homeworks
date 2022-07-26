@@ -9,8 +9,13 @@ hasTooltipLinks.forEach(toolTipLink => {
   toolTipLink.addEventListener('click', e => {
     e.preventDefault();
     closeOpenedToolTips();
-    let toolTipHTML = `<div class="tooltip" style="left: 0; top: 0">${toolTipLink.title}</div>`;
+
+    let toolTipHTML = `<div class="tooltip" style="left: ${Math.round(e.target.getBoundingClientRect().left) + 'px'}; top: ${Math.round(e.target.getBoundingClientRect().bottom) + 'px'}">${toolTipLink.title}</div>`;
     toolTipLink.insertAdjacentHTML('afterend', toolTipHTML);
     toolTipLink.nextElementSibling.classList.add('tooltip_active');
   });
+});
+
+window.addEventListener('scroll', function() {
+  closeOpenedToolTips();
 });
