@@ -19,16 +19,13 @@ function activateChat() {
   chatWidget.classList.add(activeWidgetClass);
   new Chatbox(chatWidget);
   document.removeEventListener('click', clickEventHandler);
-  document.addEventListener('click', e => {
-    if ((e.target.closest('.chat-widget') !== chatWidget)) {
-      deactivateChat();
-      document.addEventListener('click', clickEventHandler);
-    }
-  })
+  document.addEventListener('click', missClickEventHandler);
 }
 
 function deactivateChat() {
   chatWidget.classList.remove(activeWidgetClass);
+  document.removeEventListener('click', missClickEventHandler);
+  document.addEventListener('click', clickEventHandler);
 }
 class Chatbox {
   constructor(chatWidget) {
@@ -93,6 +90,13 @@ function clickEventHandler(e) {
   if (e.target.closest('.chat-widget') === chatWidget) {
     activateChat();
   } 
+}
+
+function missClickEventHandler(e) {
+  if ((e.target.closest('.chat-widget') !== chatWidget)) {
+    deactivateChat();
+    document.addEventListener('click', clickEventHandler);
+  }
 }
 
 document.addEventListener('click', clickEventHandler);
