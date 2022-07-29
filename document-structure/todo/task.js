@@ -42,7 +42,7 @@ taskList.addEventListener('click', e => {
 //add task from input
 btnTaskAdd.addEventListener('click', e => {
   e.preventDefault();
-  if (taskInput.value !== '') {
+  if (taskInput.value.trim() !== '') {
     createTask(taskInput.value);
     //save task to local storage
     savedTaskArray.push(taskInput.value);
