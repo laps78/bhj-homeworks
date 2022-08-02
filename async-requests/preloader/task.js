@@ -1,6 +1,7 @@
 const loader = document.querySelector('#loader');
 const items = document.querySelector('#items');
 const requestUrl = 'https://netology-slow-rest.herokuapp.com';
+let localStorageArray = [];
 
 function hideLoader() {
   if (loader.classList.contains('loader_active')) {
@@ -14,11 +15,14 @@ function showLoader() {
   }
 }
 
-function makeValuteList(valutes) {
+function cleanValutesList() {
   while (items.firstChild) {
     items.removeChild(items.firstChild);
   };
+}
 
+function makeValuteList(valutes) {
+  cleanValutesList();
   for (valute in valutes) {
     makeValute(valutes[valute]);
   }
@@ -34,6 +38,9 @@ function makeValute(valute) {
     <div class="item__currency">руб.</div>
     `; 
   valuteDiv.insertAdjacentHTML('afterBegin', currencyHTML);
+
+  //save to LS
+  saveValuteToLS(valute.CharCode, valute.Value);
 }
 
 function makeRequest() {
@@ -41,6 +48,8 @@ function makeRequest() {
   xhr.open('GET', requestUrl, true);
   xhr.responseType = 'json';
   xhr.send();
+  cleanValutesList();
+  showLoader();
   xhr.addEventListener('readystatechange', () => {
     responseHandler(xhr);
   });
@@ -54,8 +63,18 @@ function responseHandler(xhr) {
   }
 }
 
-function localStorageUpdater() {
-  
+function saveValuteToLS(item, value) {
+  localStorageArray.push({ CharCode: item, Value: value });
+  localStorage.setItem('valutesArray', JSON.stringify(localStorageArray));
 }
+
+function loadValutesFromLS () {
+  if (localStorage.valutesArray) {
+    localStorageArray = JSON.parse(localStorage.valutesArray);
+    localStorageArray.forEach(elem => makeValute(elem));
+  }
+}
+
+loadValutesFromLS();
 
 makeRequest();
