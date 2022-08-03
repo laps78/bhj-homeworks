@@ -1,6 +1,4 @@
 const modal = document.querySelector('#subscribe-modal');
-console.log('cookie:');
-console.log(document.cookie);
 
 if (document.cookie !== 'modalClosed=true') {
   modal.classList.add('modal_active');
