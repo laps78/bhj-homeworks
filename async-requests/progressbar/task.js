@@ -5,9 +5,11 @@ const form = document.forms.form;
 sendBtn.addEventListener('click', e => {
   e.preventDefault();
   const formData = new FormData(form);
+  
+  console.log(form.file.files[0]);//file seems to be defined
+  
   formData.append('file', form.file.files[0]);
   
-  console.log(form.file.files[0]);//file is defined
   console.log(formData);//seems to be empty
   
   const xhr = new XMLHttpRequest();
